@@ -1,23 +1,18 @@
 ### HshcFrameWorkFilter
 
 ```java
-private void selfDoFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+private void selfDoFilter(ServletRequest request, ServletResponse response, FilterChain chain){
 	if (request instanceof HttpServletRequest && response instanceof HttpServletResponse) {
-		...
+		// ...
 		if (!HSHCSysHandleUtil.invoke(req, res, chain)) {
-			...
+			// ...
 			long time = System.currentTimeMillis();
 			boolean su = false;
 
 			try {
 				// 设置上下文, 生成链路sessionId
 				HSHCAppContext.setControllerContextId(url);
-				ServletContext application = request.getServletContext();
-				setUrlsToApplaction(application);
-				HttpServletRequest realInvokeReq = req;
-				
 				// ...
-
 				HttpContext.setReqAndRes((HttpServletRequest)realInvokeReq, res);
 				chain.doFilter((ServletRequest)realInvokeReq, response);
 				su = true;
